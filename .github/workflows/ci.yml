@@ -32,5 +32,5 @@ jobs:
       - name: Run Tests
         run: |
           source .venv/bin/activate
-          pytest tests/
+          pytest
         shell: bash
