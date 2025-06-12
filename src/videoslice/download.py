@@ -1,35 +1,23 @@
-import subprocess
 from typing import List
-
 from videoslice.program_runner import ProgramRunner
-from videoslice.runner import Runner
 
 
-def download_video(ytdlp_args: List[str], log=True) -> subprocess.CompletedProcess:
-    p = ProgramRunner(program=ytdlp_args)
-    (res, outcome) = p.run()
-    if log:
-        print("Running yt-dlp command:", " ".join(ytdlp_args))
-        if res.stdout:
-            print("Output:", res.stdout)
-        if res.stderr:
-            print("Error:", res.stderr)
-        if outcome == Runner.PASS:
-            print("yt-dlp command executed successfully.")
-        if outcome == Runner.FAIL:
-            print("yt-dlp command failed.")
-        if outcome == Runner.UNRESOLVED:
-            print("yt-dlp command was unresolved.")
-        if outcome == Runner.FAIL or outcome == Runner.UNRESOLVED:
-            print("Exiting due to failure or unresolved state.")
-    return res
-
-
-def download_args(url: str, destination: str) -> List[str]:
+def download_runner(ytdlp_args: List[str], log=True) -> int:
     """
-    Downloads a video from a given URL using yt-dlp.
-        :param url: URL of the video to download.
-        :param destination: Path to save the downloaded video file.
+    Downloads a video using yt-dlp with the provided arguments.
+        :param ytdlp_args: Arguments for yt-dlp as a string.
+        :param log: Whether to log the output command.
+        :return: Exit code of the yt-dlp command.
+    """
+    p = ProgramRunner(" ".join(ytdlp_args))
+    return p.run(log=log)
+
+
+def youtube_download_args(url: str, destination: str) -> List[str]:
+    """
+    Downloads a video using yt-dlp.
+        :param url: URL YouTube video.
+        :param destination: Path to save video file.
     """
     args = [
         "yt-dlp",
