@@ -1,13 +1,11 @@
 import argparse
 
-from videoslice.download import download_args, download_video
-from videoslice.program_runner import ProgramRunner
-from videoslice.runner import Runner
-from videoslice.slice import cut_video_args, slice_video
+from videoslice.download import youtube_download_args, download_runner
+from videoslice.slice import slice_video_args, slice_video
 
 
 def main() -> None:
-    print("[Video Slice]: Hello from videoslice!")
+    print("[Video Slice] 🎬 Hello! 👋🏾")
     parser = argparse.ArgumentParser(description="Video slicing utility")
     parser.add_argument(
         "--start",
@@ -46,18 +44,26 @@ def main() -> None:
     output = args.output
     url = args.url
     log = args.log
-    ytdlp_args = download_args(url, input_video)
-    ffmpeg_args = cut_video_args(start, end, input_video, output)
+    ytdlp_args = youtube_download_args(url, input_video)
+    ffmpeg_args = slice_video_args(start, end, input_video, output)
+
+    status = None
 
     if url is not None:
         # download video
-        res = download_video(ytdlp_args, log=log)
-        if res.returncode != 0:
-            print("Error downloading video. Exiting.")
-            return
+        status = download_runner(ytdlp_args, log=log)
 
     # slice video
-    slice_video(ffmpeg_args, log=log)
+    if status is None:
+        print("[Video Slice] ❌ Failed to download video.")
+    elif status != 0:
+        print("[Video Slice] ❤️‍🩹 recived non-zero exit code from yt-dlp.")
+    else:
+        slice_status = slice_video(ffmpeg_args, log=log)
+        if slice_status != 0:
+            print("[Video Slice] ✂️ Failed to slice video.")
+        else:
+            print("[Video Slice] ✅ Video sliced successfully!")
 
 
 if __name__ == "__main__":
