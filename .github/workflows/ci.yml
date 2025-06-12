@@ -29,8 +29,12 @@ jobs:
           uv venv
           uv pip install -e .
 
+      - name: Test Download and Slice
+        run: |
+          source .venv/bin/activate
+          uv run videoslice -s 00:04:22 -e 00:05:40 -i input.mp4 -o output.mp4 -u https://youtu.be/sLaxGAL_Pl0 --log
+
       - name: Run Tests
         run: |
           source .venv/bin/activate
           pytest
-        shell: bash
