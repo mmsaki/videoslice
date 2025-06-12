@@ -1,5 +1,12 @@
 # Videoslice
 
+![PyPI - Version](https://img.shields.io/pypi/v/videoslice)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/videoslice)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/mmsaki/videoslice)
+![GitHub License](https://img.shields.io/github/license/mmsaki/videoslice)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mmsaki/videoslice)
+![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/msakiart)
+
 Videoslice is a Python package that provides a simple way to slice videos into smaller segments based on specified time intervals. 
 
 
