@@ -1,0 +1,36 @@
+name: Cross-Platform CI with UV
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install UV
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Install Dependencies with UV
+        run: |
+          uv venv
+          uv pip install -e .
+
+      - name: Run Tests
+        run: |
+          source .venv/bin/activate
+          pytest tests/
+        shell: bash
