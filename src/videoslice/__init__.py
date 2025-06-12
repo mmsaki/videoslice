@@ -30,7 +30,7 @@ def main() -> None:
         "--output", "-o", type=str, required=True, help="Path to save the sliced video"
     )
     parser.add_argument(
-        "--url", "-u", type=str, required=True, help="URL of the video to download"
+        "--url", "-u", type=str, required=False, help="URL of the video to download"
     )
     parser.add_argument(
         "--log",
@@ -49,11 +49,12 @@ def main() -> None:
     ytdlp_args = download_args(url, input_video)
     ffmpeg_args = cut_video_args(start, end, input_video, output)
 
-    # download video
-    res = download_video(ytdlp_args, log=log)
-    if res.returncode != 0:
-        print("Error downloading video. Exiting.")
-        return
+    if url is not None:
+        # download video
+        res = download_video(ytdlp_args, log=log)
+        if res.returncode != 0:
+            print("Error downloading video. Exiting.")
+            return
 
     # slice video
     slice_video(ffmpeg_args, log=log)
