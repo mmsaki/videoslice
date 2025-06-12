@@ -19,8 +19,8 @@ Here's a basic example of how to use Videoslice:
 
 >[!NOTE]
 > Make sure you have `ffmpeg` installed on your system, as Videoslice relies on it for video processing.
-> - [Download ffmpeg](https://ffmpeg.org/download.html
-> - [Download yt-dlp](https://github.com/yt-dlp/yt-dlp
+> - [Download ffmpeg](https://ffmpeg.org/download.html)
+> - [Download yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
 1. Download video from a YouTube URL + slice it:
 
