@@ -10,7 +10,9 @@ authors = [
     { name = "Meek Msaki", email = "meek10x+videoslice@gmail.com" }
 ]
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "yt-dlp>=2025.6.9",
+]
 
 [project.scripts]
 videoslice = "videoslice:main"

@@ -1,6 +1,9 @@
 import argparse
 
-from videoslice.download import youtube_download_args, download_runner
+import yt_dlp
+
+from videoslice.download import get_ydl_opts, youtube_download_args, download_runner
+from videoslice.logger import MyCustomPP
 from videoslice.slice import slice_video_args, slice_video
 
 
@@ -64,6 +67,12 @@ def main() -> None:
             print("[Video Slice] ✂️ Failed to slice video.")
         else:
             print("[Video Slice] ✅ Video sliced successfully!")
+
+    # ydl_opts = get_ydl_opts(url, input_video)
+    # with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    #     # ℹ️ "when" can take any value in yt_dlp.utils.POSTPROCESS_WHEN
+    #     ydl.add_post_processor(MyCustomPP(), when="pre_process")
+    #     ydl.download(url)
 
 
 if __name__ == "__main__":

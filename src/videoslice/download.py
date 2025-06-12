@@ -1,5 +1,7 @@
 from typing import List
+from videoslice.logger import MyCustomPP, MyLogger, my_hook
 from videoslice.program_runner import ProgramRunner
+import yt_dlp
 
 
 def download_runner(ytdlp_args: List[str], log=True) -> int:
@@ -11,6 +13,24 @@ def download_runner(ytdlp_args: List[str], log=True) -> int:
     """
     p = ProgramRunner(" ".join(ytdlp_args))
     return p.run(log=log)
+
+
+def get_ydl_opts(url: str, destination: str) -> dict:
+    ydl_opts = {
+        "cookiesfrombrowser": ("chrome", None, None, None),
+        "extract_flat": "discard_in_playlist",
+        "format": "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4] / bv*+ba/b",
+        "fragment_retries": 10,
+        "ignoreerrors": "only_download",
+        "outtmpl": {"default": destination},
+        "postprocessors": [
+            {"key": "FFmpegConcat", "only_multi_video": True, "when": "playlist"}
+        ],
+        "retries": 10,
+        "logger": MyLogger(),
+        "progress_hooks": [my_hook],
+    }
+    return ydl_opts
 
 
 def youtube_download_args(url: str, destination: str) -> List[str]:
@@ -29,4 +49,5 @@ def youtube_download_args(url: str, destination: str) -> List[str]:
         "--cookies-from-browser",
         "chrome",
     ]
+
     return args
