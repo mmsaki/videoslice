@@ -72,7 +72,6 @@ def main() -> None:
     twitter = args.twitter
     if twitter:
         print("[Video Slice] 🐦 Converting video to Twitter format...")
-        # Here you would add the logic to convert the video to Twitter format
         ffmpeg_args_twitter = twitter_format_args(
             output, "".join(output.split(".")[:-1]) + "_twitter.mp4"
         )
