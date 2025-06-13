@@ -5,7 +5,6 @@ description = "A tool to slice YouTube videos into smaller segments"
 readme = "README.md"
 license = "MIT"
 keywords = ["youtube", "video", "slicing", "tool", "ffmpeg"]
-home-page = "https://github.com/mmsaki/videoslice"
 authors = [
     { name = "Meek Msaki", email = "meek10x+videoslice@gmail.com" }
 ]
