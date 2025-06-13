@@ -15,6 +15,10 @@ dependencies = [
     "yt-dlp>=2025.6.9",
 ]
 
+[project.urls]
+Homepage = "https://github.com/mmsaki/videoslice"
+Issues = "https://github.com/mmsaki/videoslice/issues"
+
 [project.scripts]
 videoslice = "videoslice:main"
 
