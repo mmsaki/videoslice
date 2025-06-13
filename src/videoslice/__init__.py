@@ -1,9 +1,6 @@
 import argparse
 
-import yt_dlp
-
-from videoslice.download import get_ydl_opts, youtube_download_args, download_runner
-from videoslice.logger import MyCustomPP
+from videoslice.download import youtube_download_args, download_runner
 from videoslice.slice import slice_video_args, slice_video, twitter_format_args
 
 
@@ -76,7 +73,9 @@ def main() -> None:
     if twitter:
         print("[Video Slice] 🐦 Converting video to Twitter format...")
         # Here you would add the logic to convert the video to Twitter format
-        ffmpeg_args_twitter = twitter_format_args(output, "twitter_" + output)
+        ffmpeg_args_twitter = twitter_format_args(
+            output, "".join(output.split(".")[:-1]) + "_twitter.mp4"
+        )
         slice_video(ffmpeg_args_twitter, log=log)
 
     # ydl_opts = get_ydl_opts(url, input_video)

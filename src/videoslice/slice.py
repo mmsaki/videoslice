@@ -1,9 +1,9 @@
-from typing import List
+from typing import List, Union
 
 from videoslice.program_runner import ProgramRunner
 
 
-def slice_video(ffmpeg_args: List[str], log=True) -> int:
+def slice_video(ffmpeg_args: Union[List[str], str], log=True) -> int:
     """Slices a video using ffmpeg."""
     p = ProgramRunner(ffmpeg_args)
     return p.run(log=log)
