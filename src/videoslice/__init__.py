@@ -4,7 +4,7 @@ import yt_dlp
 
 from videoslice.download import get_ydl_opts, youtube_download_args, download_runner
 from videoslice.logger import MyCustomPP
-from videoslice.slice import slice_video_args, slice_video
+from videoslice.slice import slice_video_args, slice_video, twitter_format_args
 
 
 def main() -> None:
@@ -39,6 +39,12 @@ def main() -> None:
         action="store_true",
         help="Enable logging of yt-dlp command and output",
     )
+    parser.add_argument(
+        "--twitter",
+        "-t",
+        action="store_true",
+        help="Enable Twitter video format conversion.",
+    )
     args = parser.parse_args()
 
     start = args.start
@@ -50,23 +56,28 @@ def main() -> None:
     ytdlp_args = youtube_download_args(url, input_video)
     ffmpeg_args = slice_video_args(start, end, input_video, output)
 
-    status = None
-
     if url is not None:
         # download video
         status = download_runner(ytdlp_args, log=log)
 
-    # slice video
-    if status is None:
-        print("[Video Slice] ❌ Failed to download video.")
-    elif status != 0:
-        print("[Video Slice] ❤️‍🩹 recived non-zero exit code from yt-dlp.")
+        # slice video
+        if status is None:
+            print("[Video Slice] ❌ Failed to download video.")
+        elif status != 0:
+            print("[Video Slice] ❤️‍🩹 recived non-zero exit code from yt-dlp.")
+
+    slice_status = slice_video(ffmpeg_args, log=log)
+    if slice_status != 0:
+        print("[Video Slice] ✂️ Failed to slice video.")
     else:
-        slice_status = slice_video(ffmpeg_args, log=log)
-        if slice_status != 0:
-            print("[Video Slice] ✂️ Failed to slice video.")
-        else:
-            print("[Video Slice] ✅ Video sliced successfully!")
+        print("[Video Slice] ✅ Video sliced successfully!")
+
+    twitter = args.twitter
+    if twitter:
+        print("[Video Slice] 🐦 Converting video to Twitter format...")
+        # Here you would add the logic to convert the video to Twitter format
+        ffmpeg_args_twitter = twitter_format_args(output, "twitter_" + output)
+        slice_video(ffmpeg_args_twitter, log=log)
 
     # ydl_opts = get_ydl_opts(url, input_video)
     # with yt_dlp.YoutubeDL(ydl_opts) as ydl:

@@ -36,3 +36,20 @@ def slice_video_args(start, end, source, destination) -> List[str]:
     ]
 
     return args
+
+
+def twitter_format_args(input_video: str, output_video) -> str:
+    """
+    Returns the ffmpeg arguments for converting a video to Twitter format.
+    """
+    args = [
+        "ffmpeg",
+        "-i",
+        input_video,
+        "-filter:v",
+        "\"scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2\"",
+        "-pix_fmt",
+        "yuv420p",
+        output_video,
+    ]
+    return " ".join(args)
