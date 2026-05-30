@@ -7,16 +7,19 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mmsaki/videoslice)
 ![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/msakiart)
 
-Videoslice is a Python package that provides a simple way to slice videos into smaller segments based on specified time intervals. 
-
+Videoslice is a Python package that provides a simple way to slice videos into smaller segments based on specified time intervals.
 
 Use it to create clips from longer videos, making it easier to manage and share specific parts of your video content.
 
 ## Installation
 
-You can install Videoslice using pip:
+You can install Videoslice using pip or uv:
 
 ```bash
+# using uv https://docs.astral.sh/uv/getting-started/installation/
+uv tool install videoslice
+
+# or using pip
 pip install videoslice
 ```
 
@@ -26,6 +29,7 @@ Here's a basic example of how to use Videoslice:
 
 >[!NOTE]
 > Make sure you have `ffmpeg` installed on your system, as Videoslice relies on it for video processing.
+>
 > - [Download ffmpeg](https://ffmpeg.org/download.html)
 > - [Download yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
@@ -40,7 +44,7 @@ videoslice --url https://youtu.be/sLaxGAL_Pl0 \
 --log
 ```
 
-2. Slice an existing video file:
+1. Slice an existing video file:
 
 ```sh
 videoslice --start 00:01:00 \
@@ -49,7 +53,6 @@ videoslice --start 00:01:00 \
 --output sliced_video.mp4 \
 --log
 ```
-
 
 ## Command Line Options
 
